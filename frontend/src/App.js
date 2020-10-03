@@ -1,5 +1,6 @@
 import React from "react";
 import Container from "react-bootstrap/Container";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -8,15 +9,15 @@ import "./App.css";
 
 const App = () => {
   return (
-    <React.Fragment>
+    <Router>
       <Header />
       <Container className="px-0">
         <main className="py-3">
-          <HomeScreen />
+          <Route path="/" component={HomeScreen} exact />
         </main>
       </Container>
       <Footer />
-    </React.Fragment>
+    </Router>
   );
 };
 
