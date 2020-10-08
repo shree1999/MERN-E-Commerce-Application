@@ -2,9 +2,9 @@ import express from "express";
 
 import { keys } from "./config/keys.js";
 import productRoutes from "./routes/products.routes.js";
+import connectDatabase from "./config/db.js";
 
-console.log(keys);
-
+connectDatabase();
 const app = express();
 const PORT = keys.port;
 
