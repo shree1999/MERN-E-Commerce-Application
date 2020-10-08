@@ -1,8 +1,9 @@
-require("dotenv").config();
-const express = require("express");
+import express from "express";
 
-const keys = require("./config/keys");
-const productRoutes = require("./routes/products.routes");
+import { keys } from "./config/keys.js";
+import productRoutes from "./routes/products.routes.js";
+
+console.log(keys);
 
 const app = express();
 const PORT = keys.port;
