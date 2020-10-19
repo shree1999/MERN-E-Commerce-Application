@@ -42,7 +42,7 @@ const ProductDetail = ({ match }) => {
 
             <ListGroup.Item>
               <Rating
-                value={product.rating}
+                value={product.avgRating}
                 text={`${product.numReviews} reviews`}
               />
             </ListGroup.Item>

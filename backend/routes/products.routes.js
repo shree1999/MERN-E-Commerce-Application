@@ -1,17 +1,27 @@
 import express from "express";
 
-import products from "../Data/products.js";
+import Product from "../models/product.model.js";
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.send(products);
+router.get("/", async (req, res) => {
+  try {
+    const products = await Product.find().lean().exec();
+
+    res.send(products);
+  } catch (err) {
+    console.error(err.message);
+  }
 });
 
-router.get("/:id", (req, res) => {
-  const product = products.find(p => p._id === req.params.id);
+router.get("/:id", async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id).lean().exec();
 
-  res.send(product);
+    res.send(product);
+  } catch (err) {
+    console.error(err.message);
+  }
 });
 
 export default router;
