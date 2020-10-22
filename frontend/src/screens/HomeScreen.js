@@ -5,6 +5,8 @@ import Col from "react-bootstrap/Col";
 
 import { listProducts } from "../actions/productActions";
 import Product from "../components/Product";
+import Loader from "../shared/Loader";
+import AlertComponent from "../shared/Alert";
 
 const HomeScreen = () => {
   /*
@@ -26,9 +28,9 @@ const HomeScreen = () => {
       <h1>Our Recent Products</h1>
       <Row>
         {loading ? (
-          <h2>Loading...</h2>
+          <Loader />
         ) : errMessage ? (
-          <h2>{errMessage}</h2>
+          <AlertComponent variant="danger">{errMessage}</AlertComponent>
         ) : (
           products.map(item => (
             <Col sm={12} md={6} lg={4} key={item._id.toString()}>
