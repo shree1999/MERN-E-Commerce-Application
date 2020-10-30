@@ -1,15 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Row, Col, Button, ListGroup, Image } from "react-bootstrap";
-import axios from "axios";
+import { Row, Col, Button, ListGroup, Image, Form } from "react-bootstrap";
 
 import Rating from "../components/Rating";
 import Loader from "../shared/Loader";
 import AlertComponent from "../shared/Alert";
 import { getProduct } from "../actions/productActions";
 
-const ProductDetail = ({ match }) => {
+const ProductDetail = ({ match, history }) => {
+  const [qty, setQty] = useState(0);
+
   const dispatch = useDispatch();
 
   const productDetail = useSelector(state => state.productDetail);
@@ -17,12 +18,17 @@ const ProductDetail = ({ match }) => {
 
   useEffect(() => {
     dispatch(getProduct(match.params.id));
-  }, [dispatch]);
+  }, [dispatch, match.params.id]);
+
+  const addToCartHandler = () => {
+    // redirect to the cart page with number of items and id
+    history.push(`/cart/${match.params.id}?qty=${qty}`);
+  };
 
   return (
     <React.Fragment>
       <Link to="/" className="btn btn-light">
-        <i class="fas fa-arrow-left"></i>
+        <i className="fas fa-arrow-left"></i>
         {"  "}Go Back
       </Link>
 
@@ -65,13 +71,32 @@ const ProductDetail = ({ match }) => {
                     {product.countInStock > 0 ? "In Stock" : "Out of Stock"}
                   </h5>
                 </ListGroup.Item>
+
+                {product.countInStock > 0 && (
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>
+                        <Form.Control
+                          as="select"
+                          value={qty}
+                          onChange={event => setQty(event.target.value)}
+                        >
+                          {[...Array(product.countInStock).keys()].map(num => (
+                            <option key={num.toString()}>{num}</option>
+                          ))}
+                        </Form.Control>
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
+                )}
               </ListGroup>
 
               <div className="mt-4">
                 <Button
                   variant="dark"
-                  class="btn btn-dark"
+                  className="btn btn-dark"
                   disabled={product.countInStock === 0}
+                  onClick={addToCartHandler}
                 >
                   Add to cart
                 </Button>
