@@ -9,7 +9,7 @@ import AlertComponent from "../shared/Alert";
 import { getProduct } from "../actions/productActions";
 
 const ProductDetail = ({ match, history }) => {
-  const [qty, setQty] = useState(0);
+  const [qty, setQty] = useState(1);
 
   const dispatch = useDispatch();
 
@@ -82,7 +82,7 @@ const ProductDetail = ({ match, history }) => {
                           onChange={event => setQty(event.target.value)}
                         >
                           {[...Array(product.countInStock).keys()].map(num => (
-                            <option key={num.toString()}>{num}</option>
+                            <option key={num.toString()}>{num + 1}</option>
                           ))}
                         </Form.Control>
                       </Col>
