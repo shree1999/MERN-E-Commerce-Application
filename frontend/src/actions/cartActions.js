@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { CART_ADD_ITEM } from "../constants/cartTypes";
+import { CART_ADD_ITEM, CART_REMOVE_ITEM } from "../constants/cartTypes";
 
 const addCartItem = (id, qty) => async (dispatch, getState) => {
   /* Thunk middleware gives us access to getState 
@@ -28,4 +28,13 @@ const addCartItem = (id, qty) => async (dispatch, getState) => {
   localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
 };
 
-export { addCartItem };
+const removeCartItem = id => (dispatch, getState) => {
+  dispatch({
+    type: CART_REMOVE_ITEM,
+    payload: id,
+  });
+
+  localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
+};
+
+export { addCartItem, removeCartItem };

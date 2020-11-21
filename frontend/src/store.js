@@ -15,10 +15,12 @@ const reducer = combineReducers({
   cart: cartReducer,
 });
 
+// fetching if cart-items exists in local-storage
 const cartFromLocalStorage = localStorage.getItem("cartItems")
   ? JSON.parse(localStorage.getItem("cartItems"))
   : [];
 
+// initializing the state with cart
 const initialState = {
   cart: { cartItems: cartFromLocalStorage },
 };

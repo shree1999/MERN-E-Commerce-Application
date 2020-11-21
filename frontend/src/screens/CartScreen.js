@@ -1,18 +1,11 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import {
-  Row,
-  Col,
-  Image,
-  Button,
-  ListGroup,
-  Form,
-  Card,
-} from "react-bootstrap";
+import { Row, Col, Button, ListGroup, Form, Card } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 
 import Alert from "../shared/Alert";
 import { addCartItem } from "../actions/cartActions";
+import Cart from "../components/Cart";
 
 const CartScreen = ({ match, location, history }) => {
   /*
@@ -36,9 +29,45 @@ const CartScreen = ({ match, location, history }) => {
   }, [dispatch, addCartItem, productId, qty]);
 
   return (
-    <div>
-      <h1>Cart</h1>
-    </div>
+    <Row>
+      <Col md={8}>
+        <h1>Shopping Cart</h1>
+        {cartItems.length === 0 ? (
+          <Alert>
+            Your cart is empty <Link to="/"> Go Back</Link>
+          </Alert>
+        ) : (
+          <ListGroup variant="flush">
+            <Cart cartItems={cartItems} />
+          </ListGroup>
+        )}
+      </Col>
+      <Col md={4}>
+        <Card>
+          <ListGroup variant="flush">
+            <ListGroup.Item>
+              <h2>
+                {" "}
+                Subtotal (
+                {cartItems.reduce((acc, item) => acc + Number(item.qty), 0)})
+                items
+              </h2>
+              Total:{" "}
+              {cartItems.reduce((acc, item) => acc + item.qty * item.price, 0)}
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <Button
+                type="button"
+                className="btn-block"
+                disabled={cartItems.length === 0}
+              >
+                Proceed To Checkout
+              </Button>
+            </ListGroup.Item>
+          </ListGroup>
+        </Card>
+      </Col>
+    </Row>
   );
 };
 
