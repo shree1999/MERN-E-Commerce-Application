@@ -13,6 +13,7 @@ const ProductDetail = ({ match, history }) => {
 
   const dispatch = useDispatch();
 
+  // fetching product detail from reducers.
   const productDetail = useSelector(state => state.productDetail);
   const { loading, product, errMessage } = productDetail;
 
