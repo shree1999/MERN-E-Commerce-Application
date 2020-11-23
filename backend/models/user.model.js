@@ -31,6 +31,13 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+userSchema.methods.toJSON = function () {
+  const userObject = this.toObject();
+
+  delete userObject.password;
+  return userObject;
+};
+
 userSchema.statics.findByCred = async (email, password) => {
   const user = await User.findOne({ email });
   if (!user) {
@@ -52,6 +59,14 @@ userSchema.methods.getAuthToken = function () {
 
   return token;
 };
+
+userSchema.pre("save", async function (next) {
+  if (this.isModified("password")) {
+    this.password = await bcrypt.hash(this.password, 10);
+  }
+
+  next();
+});
 
 const User = mongoose.model("User", userSchema);
 
