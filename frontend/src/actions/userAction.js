@@ -43,3 +43,5 @@ const userLoginAction = (email, password) => async dispatch => {
     });
   }
 };
+
+export { userLoginAction };

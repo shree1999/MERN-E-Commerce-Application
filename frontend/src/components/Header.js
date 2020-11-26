@@ -20,10 +20,9 @@ const Header = () => {
                   <i className="fa fa-cart-plus" aria-hidden="true"></i> Cart
                 </Nav.Link>
               </LinkContainer>
-              <LinkContainer to="/register">
+              <LinkContainer to="/login">
                 <Nav.Link>
-                  <i className="fa fa-user-plus" aria-hidden="true"></i>{" "}
-                  Register
+                  <i className="fa fa-user" aria-hidden="true"></i> Sign In
                 </Nav.Link>
               </LinkContainer>
             </Nav>
