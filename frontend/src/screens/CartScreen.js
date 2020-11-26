@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Row, Col, Button, ListGroup, Form, Card } from "react-bootstrap";
+import { Row, Col, Button, ListGroup, Card } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 
 import Alert from "../shared/Alert";
@@ -26,7 +26,7 @@ const CartScreen = ({ match, location, history }) => {
     if (productId) {
       dispatch(addCartItem(productId, qty));
     }
-  }, [dispatch, addCartItem, productId, qty]);
+  }, [dispatch, productId, qty]);
 
   return (
     <Row>
