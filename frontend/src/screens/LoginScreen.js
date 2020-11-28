@@ -5,17 +5,37 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { userLoginAction } from "../actions/userAction";
 import FormComponent from "../components/FormComponent";
+import Alert from "../shared/Alert";
+import Spinner from "../shared/Loader";
 
-const LoginScreen = ({ location }) => {
+const LoginScreen = ({ location, history }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const redirect = location.search ? location.search.split("=")[1] : "/";
 
+  const dispatch = useDispatch();
+  const userLogin = useSelector(state => state.userLogin);
+
+  const { loading, userInfo, error } = userLogin;
+
+  useEffect(() => {
+    if (userInfo) {
+      history.push(redirect);
+    }
+  }, [history, userInfo, redirect]);
+
+  const onSubmitHandler = event => {
+    event.preventDefault();
+    dispatch(userLoginAction(email, password));
+  };
+
   return (
     <FormComponent>
       <h1>Login</h1>
-      <Form>
+      {error && <Alert variant="danger">{error}</Alert>}
+      {loading && <Spinner />}
+      <Form onSubmit={onSubmitHandler}>
         <Form.Group controlId="email">
           <Form.Label>Email Address</Form.Label>
           <Form.Control
